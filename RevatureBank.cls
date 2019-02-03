@@ -5,7 +5,7 @@
     • Update the account based on all related transactions to show current balance.
 */
 public with sharing class RevatureBank {
-    List<Bank_Account> myAccounts = new List<Bank_Account>;
+    private static List<BankAccount__c> myAccounts = new List<BankAccount__c>();
 
     public RevatureBank() {
 
@@ -14,7 +14,7 @@ public with sharing class RevatureBank {
 //This method is for filling myAccounts with all the Bank Accounts on the Org.
     public static void fillList()
     {
-        for(Bank_Account ba: [SELECT ID, name FROM Bank_Account])
+        for(BankAccount__c ba : [SELECT ID, name FROM BankAccount__c])
         {
             myAccounts.add(ba);
             system.debug(ba.name);
