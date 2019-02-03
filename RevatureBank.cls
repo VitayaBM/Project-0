@@ -52,4 +52,29 @@ public with sharing class RevatureBank {
             }
         }
     }
+
+/* This is another way I found to complete the checkOverdrawn method, but I think using a for loop is best practice.
+      focusAccount = [SELECT name, Stored_Amount__c, Overdrawn__c FROM BankAccount__c WHERE name = :accountnum];
+                    if(focusAccount.Stored_Amount__c < 0)
+                    {
+                        focusAccount.Overdrawn__c = true;
+                        system.debug('Bank Account has a negative value, Bank Account is Overdrawn.');
+                    }
+                    else 
+                    {
+                       focusAccount.Overdrawn__c = false;
+                       system.debug('Bank Account has a positive value, Bank Account is not Overdrawn');
+                    }
+                    database.update(focusAccount);
+*/
+
+
+    //This method will create a new Transaction record based on three parameters.
+    //transactionAcct is the Bank Account making the Transaction
+    //The withdrawal bool determines if the transaction is taking money (true) or depositing money (false)
+    //transactionAmount is how much money to withdrawal or deposit from the account.
+    public static void newTransaction(BankAccount__c transactionAcct, boolean withdrawal, decimal transactionAmount)
+    {
+        
+    }
 }
