@@ -76,9 +76,28 @@ public with sharing class RevatureBank {
 
 //This method will update a Bank Account's balance (Ammount Stored field) after a Transaction
 //This method will be called from the newTransaction record.
-    public static void updateBalance(boolean withdrawal, decimal transactionAmount, BankAccount__c transactionAcct) 
+    public static void updateBalance(boolean withdrawal, decimal transactionAmount, String transactionAcct) 
     {
-        
+        BankAccount__c tempBA = null;
+        for(BankAccount__c ba : myAccounts)
+        {
+            if(ba.name == transactionAcct)
+            {
+                tempBA = ba;
+                break;
+            }
+        }
+        if(withdrawal)
+        {
+            tempBA.Stored_Amount__c -= transactionAmount;
+
+        }
+        else
+        {
+            tempBA.Stored_Amount__c += transactionAmount;
+        }
+
+        database.update(tempBA);
     }
     //This method will create a new Transaction record based on three parameters.
     //transactionAcct is the Bank Account making the Transaction
@@ -89,7 +108,7 @@ public with sharing class RevatureBank {
         //A Bank Account should not be able to make a Transaction if their they're already Overdrawn.
         boolean isOverdrawn = false;
         //If making a deposit, we don't care if the Account is Overdrawn.
-        if(!withdrawal)
+        if(withdrawal)
         {
             isOverdrawn = checkOverdrawn(transactionAcct);
         }
@@ -115,7 +134,7 @@ public with sharing class RevatureBank {
                 newTrans.Transaction_Type__c = 'Deposit';
             }
             database.insert(newTrans);
-            //updateBalance(withdrawal, transactionAmt, newTrans.LinkedAccount__c);
+            updateBalance(withdrawal, transactionAmt, transactionAcct);
         }
         else
         {
