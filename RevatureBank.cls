@@ -14,15 +14,42 @@ public with sharing class RevatureBank {
 //This method is for filling myAccounts with all the Bank Accounts on the Org.
     public static void fillList()
     {
-        for(BankAccount__c ba : [SELECT ID, name FROM BankAccount__c])
+        for(BankAccount__c ba : [SELECT ID, name, Stored_Amount__c, Overdrawn__c FROM BankAccount__c])
         {
             myAccounts.add(ba);
-            system.debug(ba.name);
         }
     }
 
-    public static void checkOverdrawn()
+//This method is for checking if a Bank Account is overdrawn
+//The method will search through the myAccounts list and find a Bank Account
+//with a Bank Account Name field that matches accountNum and then check if that
+//Bank Account's Stored Amount field is in the negatives.
+    public static void checkOverdrawn(String accountNum)
     {
-        
+        //It's possible that the myAccounts is null, so paranoid programming will help catch an error.
+        //Side-Note: I pretty sure a for-loop won't be effective for a Company with thousands
+        //of records, but I'm not sure of another way to do this at the moment.
+        if(myAccounts!=null)
+        {
+            for (BankAccount__c ba : myAccounts)
+            {
+                if(ba.name == accountNum)
+                {
+                    if(ba.Stored_Amount__c < 0)
+                    {
+                        ba.Overdrawn__c = true;
+                        system.debug('Bank Account has a negative value, Bank Account is Overdrawn.');
+                    }
+                    else 
+                    {
+                       ba.Overdrawn__c = false;
+                       system.debug('Bank Account has a positive value, Bank Account is not Overdrawn');
+                    }
+                    database.update(myAccounts);
+                    //Once match is found, we don't need to check other records.
+                    break;
+                }
+            }
+        }
     }
 }
