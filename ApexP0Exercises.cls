@@ -5,7 +5,7 @@ public with sharing class ApexP0Exercises {
 //Task 1
 public static Integer nFibonacci( Integer n )
 {
-    //0 and 1 are the given starting points, so it was  difficult putting them in the loop
+    //0 and 1 are the given starting points, so it was difficult putting them in the loop
     //below without adding if checks.
     if(n == 0 || n == 1)
     {
@@ -39,7 +39,41 @@ public static Integer nFibonacci( Integer n )
 //Task 2
 public static Integer[] sortArray( Integer[] intList ) 
 {
-return null;
+    //This will catch an empty string without giving an error during execution.
+    if(intList.size() == 0)
+    {
+        system.debug('There are no numbers in the given List.');
+        return intList;
+    }
+    
+    //Variable to store the lowest value as we go through the given Array.
+    Integer lowestVal = intList[0];
+    //Variable to store the index of lowest value since "i" will no longer be available. 
+    Integer lowestValIndex = 0;
+
+    //The outer for-loop is to make sure we go through each number in the Array
+    //The nested for-loop is to make look for the smallest number. i=r so we skip the previous smallest number.
+    for(Integer r = 0; r < intList.size(); r++)
+    {
+        //Resets each loop so that the smallest values overall isn't counted every time.
+        lowestVal = intList[r];
+        lowestValIndex = r;
+        for(Integer i = r ; i<intList.size(); i++)
+        {
+            if(intList[i] < lowestVal)
+            {
+                lowestVal = intList[i];
+                lowestValIndex = i;
+            }
+        }
+        //If remove was before add, we would get an out-of-bounds error.
+        //add puts lowestVal at intList's r index
+        intList.add(r, lowestVal);
+        //Removes lowestVal at its old location. Since we added a number, we need +1.
+        intList.remove(lowestValIndex+1);
+    }
+    system.debug('Sorted: ' + intList);
+    return intList;
 }
 
 //Task 3
