@@ -134,7 +134,63 @@ public static Integer[] rotateLeftNTimes( Integer[] ar, Integer n)
 //A bracket is any one of the following: (, ), {, }, [, or ]
 public static Boolean bracketsAreBalanced( String s ) 
 {
-return false;
+    //Since I can get a method to return '(' instead of the ASCII value, I'll be using charAt Integers for comparisons
+    //( = 40
+    //) = 41
+    //[ = 91
+    //] = 93
+    //{ = 123
+    //} = 125
+
+    //The following two Lists will separate the string into opening brackets and closing brackets resptively.
+    List<Integer> leftBrack = new List<Integer>();
+    List<Integer> rightBrack = new List<Integer>();
+    //This is for the final for-loop to increase the variable iBegin.
+    Integer loopCounter = 0;
+    //This for-loop fills leftBrack and rightBrack based on ASCII values.
+    for(Integer i = 0; i<s.length(); i++)
+    {
+        if(s.charAt(i) == 40 || s.charAt(i) == 91 || s.charAt(i) == 123 )
+        {
+            leftBrack.add(s.charAt(i));
+        }
+        else if(s.charAt(i) == 41 || s.charAt(i) == 93 || s.charAt(i) == 125)
+        {
+            rightBrack.add(s.charAt(i));
+        }
+    }
+    //Automatically return false if the two Lists are not the same size.
+    if(leftBrack.size() != rightBrack.size())
+    {
+        system.debug('false');
+        return false;
+    }
+
+    //This for loop will start from the middle of the string and work its way outward. The checking starts with the
+    //last leftBracket value and the first rightBracket value
+    for(Integer iEnd = leftBrack.size()-1; iEnd>=0; iEnd--)
+    {
+        Integer iBegin = loopCounter;
+            if(leftbrack[iEnd] == 40 && rightBrack[iBegin] != 41)
+            {
+                system.debug('false');
+                return false;
+            }
+            if(leftbrack[iEnd] == 91 && rightBrack[iBegin] != 93)
+            {
+                system.debug('false');
+                return false;
+            }
+            if(leftbrack[iEnd] == 123 && rightBrack[iBegin] != 125)
+            {
+                system.debug('false');
+                return false;
+            }
+        loopCounter++;
+    }
+    //If no discrepencies were found in the above loop, the string is a balanced bracket.
+    system.debug('true');
+    return true;
 }
 
 //Task 6 
