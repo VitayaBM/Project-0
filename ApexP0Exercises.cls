@@ -45,7 +45,7 @@ public static Integer[] sortArray( Integer[] intList )
         system.debug('There are no numbers in the given List.');
         return intList;
     }
-    
+
     //Variable to store the lowest value as we go through the given Array.
     Integer lowestVal = intList[0];
     //Variable to store the index of lowest value since "i" will no longer be available. 
@@ -79,7 +79,15 @@ public static Integer[] sortArray( Integer[] intList )
 //Task 3
 public static Integer nFactorial( Integer n) 
 {
-return 0;
+    Integer factorial = n;
+    system.debug(factorial + ' start');
+    for(Integer i = n; i>1; i--)
+    {
+        factorial*=(i-1);
+        system.debug('i is ' + i + ' fact is ' + factorial);
+    }
+    system.debug(factorial);
+    return factorial;
 }
 
 //Task 4
