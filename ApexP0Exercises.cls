@@ -247,5 +247,15 @@ public static void updateAccountSize()
     //they are not marked as 'Closed Won', they should be marked as 'Closed Lost'
     public static void closePastDueOpportunities( ) 
     {
+        List<Opportunity> myOpps = new List<Opportunity>();
+        Date thisDate = Date.today();
+        for(Opportunity o : [SELECT name, closedate, stagename FROM Opportunity 
+        WHERE stagename != 'Closed Won' AND closedate < :thisDate])
+        {
+            o.stagename = 'Closed Lost';
+            myOpps.add(o);
+        }
+        database.update(myOpps);
+
     }
 }
