@@ -193,7 +193,7 @@ public static Boolean bracketsAreBalanced( String s )
     return true;
 }
 
-//Task 6 
+//Task 6 (Done in class with Harvey Hill)
 //Create a method that retrieves a list of all accounts and updates those accounts.
 public static void updateAccountSize()
 {
@@ -228,15 +228,24 @@ public static void updateAccountSize()
 //If a lead is located in California(CA), change their Lead Status field to 'Closed - Not 
 //Converted' and their description should display the message, "We are no longer doing 
 //business in California."
-public static void updateCALeads( ) 
-{
-}
+    public static void updateCALeads( ) 
+    {
+        List<Lead> myLeads = new List<Lead>();
+        for(Lead l : [SELECT name, status, description, state FROM Lead WHERE state = 'CA'])
+        {
+            l.status = 'Closed - Not Converted';
+            l.description = 'We are no longer doing business in California.';
+            //Adding updated California Leads to myLeads so I can update the database.
+            myLeads.add(l);
+        }
+        database.update(myLeads);
+    }
 
-//Task 8
-//Create a method that will find all Opportunities which have already passed their Close Date 
-//and have a Stage field that is not 'Closed Won'. Since they have passed their Close Date and 
-//they are not marked as 'Closed Won', they should be marked as 'Closed Lost'
-public static void closePastDueOpportunities( ) 
-{
-}
+    //Task 8
+    //Create a method that will find all Opportunities which have already passed their Close Date 
+    //and have a Stage field that is not 'Closed Won'. Since they have passed their Close Date and 
+    //they are not marked as 'Closed Won', they should be marked as 'Closed Lost'
+    public static void closePastDueOpportunities( ) 
+    {
+    }
 }
