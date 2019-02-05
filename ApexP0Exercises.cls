@@ -95,7 +95,39 @@ public static Integer nFactorial( Integer n)
 
 public static Integer[] rotateLeftNTimes( Integer[] ar, Integer n) 
 {
-return null;
+    //List<Integer> oldIndexes = new List<Integer>();
+    List<Integer> newIndexes = new List<Integer>();
+    List<Integer> newAr = new List<Integer>();
+    if(n > ar.size())
+    {
+        //n=size+1 and n=size+6 will result in the same amount as n=1. When doing doing n-=ar.size until n<=size, 
+        //n will become a number thats easier to work with.
+        while(n>ar.size())
+        {
+            n-=ar.size();
+        }
+    }
+    for(Integer i = 0; i<ar.size(); i++)
+    {
+        //I'm setting newAR values here instead of newAr = ar so that the original ar doesn't change values.
+        newAr.add(ar[i]);
+        if(i-n < 0)
+        {
+            //if index in question is 0, n=3, and size=5. the new index should be 2. 0-3= -3. -3+5= 2
+            newIndexes.add(i-n+ar.size());
+        }
+        else
+        {
+            newIndexes.add(i-n);
+        }
+    }
+    //I'm doing the same for-loop again because I wanted the setup to have its own for-loop.
+    for(Integer i = 0; i < ar.size(); i++)
+    {
+        newAr.set(newIndexes[i], ar[i]);
+    }
+    system.debug(newAR);
+    return newAr;
 }
 
 //Task 5
